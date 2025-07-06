@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 const ContactForm = () => {
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+    setFormData({ name: "", email: "", message: "" });
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
   return (
-    <form className="space-y-4">
+    <form className="contact-form space-y-4 fade-in" onSubmit={handleSubmit}>
       <div className="flex flex-col">
         <label htmlFor="name" className="mb-1 font-medium">
           Name
@@ -10,8 +22,12 @@ const ContactForm = () => {
         <input
           type="text"
           id="name"
+          name="name"
           className="p-2 border rounded"
           placeholder="Your full name"
+          value={formData.name}
+          onChange={handleChange}
+          autoComplete="name"
         />
       </div>
 
@@ -22,8 +38,12 @@ const ContactForm = () => {
         <input
           type="email"
           id="email"
+          name="email"
           className="p-2 border rounded"
           placeholder="you@example.com"
+          value={formData.email}
+          onChange={handleChange}
+          autoComplete="email"
         />
       </div>
 
@@ -33,15 +53,19 @@ const ContactForm = () => {
         </label>
         <textarea
           id="message"
+          name="message"
           rows="4"
           className="p-2 border rounded"
           placeholder="Write your message..."
+          value={formData.message}
+          onChange={handleChange}
+          autoComplete="off"
         ></textarea>
       </div>
 
       <button
         type="submit"
-        className="bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700"
+        className="bg-teal-800 text-white px-4 py-2 rounded hover:bg-teal-700"
       >
         Send Message
       </button>
